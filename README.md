@@ -1,7 +1,19 @@
 frontend-nanodegree-arcade-game
 ===============================
 
-Os alunos devem usar esta [rubrica](https://review.udacity.com/#!/rubrics/436/view) para fazer uma autoavaliação de seu projeto. Certifique-se de que as funções que escreveu sejam **orientadas a objetos** - tanto funções de classe (como Player e Enemy) como funções de protótipo de classe, como Enemy.prototype.checkCollisions, e que a palavra-chave 'this' seja usada de maneira correta em suas funções de classe e de protótipo de classe para se referir ao objeto que faz a chamada da função. Certifique-se, também, de que o arquivo **readme.md** esteja atualizado com suas instruções, tanto sobre rodar quanto sobre como jogar o fliperama clássico.
+Objetivo: 
+- Neste jogo você tem um jogador e inimigos. O objetivo do jogador é alcançar a água, sem colidir com nenhum dos inimigos e acumular o máximo de pontos. 
 
-Para ver instruções detalhadas sobre como começar, confira este [guia](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+Controles:
+- O jogador pode se mover para a esquerda, para a direita, para cima e para baixo. 
+
+Inimigos:
+- Os inimigos se movem em velocidades variáveis na parte do bloco pavimentado da cena. 
+
+Mecânica do Jogo:
+- Uma vez que o jogador colide com um inimigo, o contador de tentavias e pontos é regredido, caso o contador chegue a ZERO, mostra a mensagem de Fim de Jogo e então, o jogo é reiniciado e a pontuação zerada. 
+- Quando o jogador atinge a água, é adicionado 1 ponto o contador de Pontos.
+
+HAVE FUN, BRO!!!!
+
 "# Udacity_Frogger" 
