@@ -1,3 +1,4 @@
+
 const pontoInicio = {
     inimigoInicioX: -100,
     inimigoFimX: 505,
@@ -16,21 +17,34 @@ const controles = {
     fimJogo: false,
 };
 
-var msgStatus = document.querySelector('.msgStatus').style;
+let msgStatus = document.querySelector('.msgStatus').style;
+
+class Person {
+    constructor(x, y, movVelocidade, sprite) { 
+        // As variáveis aplicadas a nossas instâncias entram aqui.
+        // Fornecemos uma a você para que possa começcar.
+        this.x = x;
+        this.y = y;
+        this.movVelocidade = movVelocidade;
+
+        // A imagem/sprite, isso usa um
+        // ajudante que é fornecido para carregar imagens
+        // com facilidade.
+        this.sprite = sprite;
+    }
+    
+    // Desenhe o persnagem na tela, método exigido pelo jogo
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
 
 // Inimigos que nosso jogador deve evitar
-var Enemy = function (x, y, movVelocidade) {
-    // As variáveis aplicadas a nossas instâncias entram aqui.
-    // Fornecemos uma a você para que possa começcar.
-    this.x = x;
-    this.y = y;
-    this.movVelocidade = movVelocidade;
-
-    // A imagem/sprite de nossos inimigos, isso usa um
-    // ajudante que é fornecido para carregar imagens
-    // com facilidade.
-    this.sprite = 'images/enemy-bug.png';
-};
+class Enemy extends Person {
+    constructor(x, y, movVelocidade) {
+        super(x,y,movVelocidade,'images/enemy-bug.png');
+    }
+}
 
 // Atualize a posição do inimigo, método exigido pelo jogo
 // Parâmetro: dt, um delta de tempo entre ticks
@@ -38,30 +52,29 @@ Enemy.prototype.update = function (dt) {
     // Você deve multiplicar qualquer movimento pelo parâmetro
     // dt, o que garantirá que o jogo rode na mesma velocidade
     // em qualquer computador.
+    const valoresFixos = {
+        inimigoDeslocamento: 50,
+        inimigoVelociodade: 200
+    }
 
     this.x += this.movVelocidade * dt;
     if (this.x > pontoInicio.inimigoFimX) {
         this.x = pontoInicio.inimigoInicioX;
 
-        this.movVelocidade = Math.floor(50 + (Math.random() * 200));
+        this.movVelocidade = Math.floor(valoresFixos.inimigoDeslocamento + (Math.random() * valoresFixos.inimigoVelociodade));
     }
 };
 
-// Desenhe o inimigo na tela, método exigido pelo jogo
-Enemy.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
 
 // Agora, escreva sua própria classe de jogador
 // Esta classe exige um método update(), 
 // um render() e um handleInput().
+class Player extends Person {
+    constructor(x, y, jogadorVelocidade) {
+        super(x,y,jogadorVelocidade,'images/char-boy.png');
+    }
+}
 
-var Player = function (x, y, jogadorVelocidade) {
-    this.x = x;
-    this.y = y;
-    this.jogadorVelocidade = jogadorVelocidade;
-    this.sprite = 'images/char-boy.png';
-};
 
 Player.prototype.update = function () {
 
@@ -98,10 +111,6 @@ Player.prototype.update = function () {
 
 };
 
-Player.prototype.render = function () {
-    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
-
 Player.prototype.handleInput = function (pressedKey) {
     switch (pressedKey) {
         case 'left':
@@ -124,10 +133,10 @@ Player.prototype.handleInput = function (pressedKey) {
 // Coloque o objeto do jogador numa variável chamada jogador.
 
 
-var todosInimigos = [];
-var player = new Player(pontoInicio.posicaoJogadorVertical, pontoInicio.posicaoJogadorHorizontal, 20);
+let todosInimigos = [];
+let player = new Player(pontoInicio.posicaoJogadorVertical, pontoInicio.posicaoJogadorHorizontal, 20);
 
-var inimigosPosicao = [pontoInicio.inimigoPrimeiroY, pontoInicio.inimigoSegundoY, pontoInicio.inimigoTerceiroY];
+let inimigosPosicao = [pontoInicio.inimigoPrimeiroY, pontoInicio.inimigoSegundoY, pontoInicio.inimigoTerceiroY];
 
 inimigosPosicao.forEach(function (verticalPos) {
     var enemy = new Enemy(pontoInicio.inimigoInicioX, verticalPos, 50 + (Math.floor(Math.random() * 200)));
